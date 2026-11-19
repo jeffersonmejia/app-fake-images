@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title">
+  <title id="title">Calle arbolada y peatonal</title>
+  <defs><linearGradient id="a" x2="0" y2="1"><stop stop-color="#b4dce7"/><stop offset="1" stop-color="#edf3e8"/></linearGradient><linearGradient id="b" x2="0" y2="1"><stop stop-color="#d8c8aa"/><stop offset="1" stop-color="#a9957a"/></linearGradient></defs>
+  <rect width="900" height="600" fill="url(#a)"/><circle cx="716" cy="130" r="66" fill="#f3d8a4"/>
+  <path d="M0 316 182 220l178 95 197-136 343 142v279H0Z" fill="#9cb8aa"/>
+  <path d="M0 379h184V247H0zm189-72h160V190H189zm0 80h201V245h-201zm401-63h150V184H590zm160 32h150V239H750z" fill="#e7e4d7"/>
+  <path d="M0 450h900v150H0z" fill="#819b8f"/><path d="M360 600 432 403h58L596 600" fill="url(#b)"/>
+  <path d="M441 600 462 449h14l47 151" fill="#eee1c3" opacity=".8"/>
+  <g fill="#527d68"><circle cx="96" cy="339" r="66"/><circle cx="154" cy="326" r="77"/><circle cx="234" cy="342" r="65"/><circle cx="687" cy="340" r="80"/><circle cx="755" cy="324" r="77"/><circle cx="831" cy="343" r="62"/></g>
+  <g fill="#739277"><circle cx="129" cy="287" r="49"/><circle cx="724" cy="272" r="52"/><circle cx="202" cy="314" r="41"/></g>
+  <g fill="#425f52"><path d="M145 337h17v115h-17zm594-7h19v120h-19z"/></g>
+  <g fill="#d7e6dc"><path d="M38 276h14v23H38zm29-16h14v23H67zm95 34h14v23h-14zm526-17h14v23h-14zm47-16h14v23h-14zm107 33h14v23h-14z"/></g>
+  <g stroke="#668e7b" stroke-width="6" fill="none"><circle cx="405" cy="480" r="20"/><circle cx="476" cy="480" r="20"/><path d="m405 480 24-41 26 41h-50l19-29 34 29m-30-55 12-3"/></g>
+</svg>

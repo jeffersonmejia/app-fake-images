@@ -1,0 +1,27 @@
+# Local environment values
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.local
+client/.env.*.local
+!client/.env.example
+
+# Node / Next.js
+client/node_modules/
+client/.next/
+client/.next-*/
+client/out/
+client/build/
+client/coverage/
+npm-debug.log*
+
+# Prisma generated client and local data
+client/src/generated/prisma/
+var/private-images/
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

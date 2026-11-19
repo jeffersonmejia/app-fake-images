@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 860" role="img" aria-labelledby="title desc">
+  <title id="title">Ciudad entre montañas al amanecer</title>
+  <desc id="desc">Ilustración editorial en tonos celestes de una ciudad rodeada por montañas.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#8fc7da"/><stop offset=".6" stop-color="#d5eaf0"/><stop offset="1" stop-color="#f4e8d4"/></linearGradient>
+    <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#fff7d9"/><stop offset="1" stop-color="#f2c986"/></linearGradient>
+    <linearGradient id="hill" x2="0" y2="1"><stop stop-color="#688d92"/><stop offset="1" stop-color="#3d626e"/></linearGradient>
+    <linearGradient id="front" x2="0" y2="1"><stop stop-color="#b8d0ce"/><stop offset="1" stop-color="#76999b"/></linearGradient>
+  </defs>
+  <rect width="1500" height="860" fill="url(#sky)"/>
+  <circle cx="1090" cy="240" r="114" fill="url(#sun)" opacity=".95"/>
+  <path d="m0 490 180-166 108 78 215-238 188 210 132-116 208 187 149-139 320 219v240H0Z" fill="#8aaeb5" opacity=".68"/>
+  <path d="m0 536 177-131 117 77 206-194 176 214 126-106 194 158 178-165 326 207v230H0Z" fill="url(#hill)" opacity=".86"/>
+  <path d="M0 614c188-78 306-32 454-61 174-34 263-66 416-12 139 49 326 11 630-42v361H0Z" fill="#d7e4dd"/>
+  <path d="M0 674c181-43 334-37 478-14 159 25 250-22 411-18 231 5 393 39 611-2v220H0Z" fill="#adc8c1"/>
+  <g opacity=".98">
+    <path d="M96 542h95v158H96z" fill="#d9e3dd"/><path d="M205 504h126v200H205z" fill="#8caab0"/>
+    <path d="M348 555h84v154h-84z" fill="#e5dfd0"/><path d="M449 478h145v239H449z" fill="#6f929c"/>
+    <path d="M612 532h97v173h-97z" fill="#d4ded7"/><path d="M726 445h150v271H726z" fill="#8fb2b6"/>
+    <path d="M899 511h111v205H899z" fill="#e8e1d1"/><path d="M1031 465h125v254h-125z" fill="#71949b"/>
+    <path d="M1174 529h88v185h-88z" fill="#d7e0d9"/><path d="M1280 497h137v215h-137z" fill="#90abb0"/>
+  </g>
+  <g fill="#e9f1ed" opacity=".8">
+    <path d="M115 563h13v18h-13zm25 0h13v18h-13zm25 0h13v18h-13zm-50 33h13v18h-13zm25 0h13v18h-13zm25 0h13v18h-13z"/>
+    <path d="M471 502h16v23h-16zm31 0h16v23h-16zm31 0h16v23h-16zm-62 43h16v23h-16zm31 0h16v23h-16zm31 0h16v23h-16z"/>
+    <path d="M750 470h17v24h-17zm34 0h17v24h-17zm34 0h17v24h-17zm-68 46h17v24h-17zm34 0h17v24h-17zm34 0h17v24h-17z"/>
+    <path d="M1051 489h15v23h-15zm29 0h15v23h-15zm29 0h15v23h-15zm-58 44h15v23h-15zm29 0h15v23h-15zm29 0h15v23h-15z"/>
+  </g>
+  <path d="M0 713c191-31 343-10 505 20 171 31 301-8 487-3 203 5 365 41 508 7v123H0Z" fill="#456d70" opacity=".82"/>
+  <g fill="#416c61"><circle cx="255" cy="696" r="37"/><circle cx="302" cy="684" r="45"/><circle cx="357" cy="702" r="31"/><circle cx="1215" cy="694" r="41"/><circle cx="1260" cy="679" r="49"/><circle cx="1315" cy="700" r="35"/></g>
+  <g fill="#f1d6a6" opacity=".8"><rect x="231" y="727" width="6" height="17"/><rect x="1250" y="718" width="6" height="21"/></g>
+</svg>

@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  READER
+  JOURNALIST
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ImageVerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  INCONCLUSIVE
+  UNAVAILABLE
+  NOT_CONFIGURED
+}
+
+model User {
+  id           String       @id @default(uuid()) @db.Uuid
+  email        String       @unique @db.VarChar(320)
+  passwordHash String       @map("password_hash") @db.VarChar(255)
+  role         UserRole     @default(READER)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  articles     Article[]
+  images       ImageAsset[]
+
+  @@map("users")
+}
+
+model Article {
+  id           String        @id @default(uuid()) @db.Uuid
+  title        String        @db.VarChar(180)
+  slug         String        @unique @db.VarChar(200)
+  summary      String        @db.VarChar(500)
+  body         String        @db.Text
+  status       ArticleStatus @default(DRAFT)
+  authorId     String        @map("author_id") @db.Uuid
+  coverImageId String?       @unique @map("cover_image_id") @db.Uuid
+  publishedAt  DateTime?     @map("published_at") @db.Timestamptz(6)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  author       User          @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  coverImage   ImageAsset?   @relation(fields: [coverImageId], references: [id], onDelete: Restrict)
+
+  @@index([status, publishedAt])
+  @@index([authorId, updatedAt])
+  @@map("articles")
+}
+
+model ImageAsset {
+  id            String              @id @default(uuid()) @db.Uuid
+  originalName  String              @map("original_name") @db.VarChar(255)
+  storageKey    String              @unique @map("storage_key") @db.VarChar(100)
+  mimeType      String              @map("mime_type") @db.VarChar(100)
+  sizeBytes     Int                 @map("size_bytes")
+  sha256        String              @db.Char(64)
+  uploadedById  String              @map("uploaded_by_id") @db.Uuid
+  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  uploadedBy    User                @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+  article       Article?
+  verifications ImageVerification[]
+
+  @@index([uploadedById, createdAt])
+  @@index([sha256])
+  @@map("image_assets")
+}
+
+model ImageVerification {
+  id           String                  @id @default(uuid()) @db.Uuid
+  imageAssetId String                  @map("image_asset_id") @db.Uuid
+  imageSha256  String                  @map("image_sha256") @db.Char(64)
+  status       ImageVerificationStatus
+  provider     String?                 @db.VarChar(120)
+  modelVersion String?                 @map("model_version") @db.VarChar(120)
+  result       Json?
+  latencyMs    Int?                    @map("latency_ms")
+  checkedAt    DateTime?               @map("checked_at") @db.Timestamptz(6)
+  createdAt    DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  imageAsset   ImageAsset              @relation(fields: [imageAssetId], references: [id], onDelete: Cascade)
+
+  @@unique([imageAssetId, imageSha256])
+  @@index([status, createdAt])
+  @@map("image_verifications")
+}

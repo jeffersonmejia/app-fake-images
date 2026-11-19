@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title">
+  <title id="title">Galería de arte contemporáneo</title>
+  <defs><linearGradient id="wall" x2="0" y2="1"><stop stop-color="#dcebf0"/><stop offset="1" stop-color="#f7f3e9"/></linearGradient><linearGradient id="art" x2="1" y2="1"><stop stop-color="#93c6d5"/><stop offset="1" stop-color="#4f8091"/></linearGradient></defs>
+  <rect width="900" height="600" fill="url(#wall)"/><path d="M75 92h750v411H75z" fill="#fffdf7"/><path d="M105 123h260v280H105z" fill="#e6ddd0"/><path d="M395 123h207v280H395z" fill="#e9e6dc"/><path d="M630 123h165v280H630z" fill="#e5ddd2"/>
+  <path d="M128 146h214v232H128z" fill="url(#art)"/><circle cx="239" cy="258" r="71" fill="#f2d39c"/><path d="M128 317c45-31 69-17 109-45s70-22 105 7v99H128z" fill="#618b78"/><path d="M395 123h207v280H395z" fill="#f5f1e6"/><path d="M430 352c9-52 27-89 69-91 37-2 45 39 74 34 29-5 28-63-4-90-30-26-81-10-91 16-27-8-58-20-65-43-8-23 21-55 70-55 54 0 99 38 111 81 17 63-28 105-69 148z" fill="#8ebdca" opacity=".9"/>
+  <path d="M650 145h126v191H650z" fill="#d0e4e9"/><path d="M650 294c27-75 67-92 126-60v102H650z" fill="#739ba3"/><circle cx="714" cy="205" r="35" fill="#e7b87d"/>
+  <path d="M0 504h900v96H0z" fill="#c7d6cf"/><path d="M0 548h900v52H0z" fill="#91aaa0"/>
+  <g fill="#536d66"><path d="M175 486h7v-48a24 24 0 0 1 48 0v48h7v-48a31 31 0 0 0-62 0z"/><path d="M670 486h7v-48a24 24 0 0 1 48 0v48h7v-48a31 31 0 0 0-62 0z"/></g>
+  <g fill="#d9ba8b"><path d="M202 482h8v25h-8zm495 0h8v25h-8z"/></g>
+</svg>
