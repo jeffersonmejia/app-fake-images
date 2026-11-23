@@ -15,6 +15,8 @@ export type VerifyImageInput = {
 export type ImageVerificationResult = {
   status: ImageVerificationStatus;
   imageSha256: string;
+  classification?: "PROBABLE_REAL" | "PROBABLE_AI";
+  score?: number;
   provider?: string;
   modelVersion?: string;
   latencyMs?: number;

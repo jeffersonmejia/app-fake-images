@@ -19,6 +19,8 @@ npm-debug.log*
 # Prisma generated client and local data
 client/src/generated/prisma/
 var/private-images/
+services/image-verifier/.venv/
+services/image-verifier/__pycache__/
 
 # Editor / OS
 .vscode/

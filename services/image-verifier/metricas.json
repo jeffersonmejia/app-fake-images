@@ -1,0 +1,39 @@
+{
+  "modelo": "CNN_Frecuencias_DCT",
+  "dataset": "TheKernel01/Tiny-GenImage",
+  "entrada": "8 x 8 x 4, estadisticas de coeficientes DCT en parches de luminancia",
+  "train_count": 800,
+  "validation_count": 200,
+  "test_count": 200,
+  "threshold": 0.6144025325775146,
+  "validation": {
+    "accuracy": 0.96,
+    "balanced_accuracy": 0.96,
+    "auc_roc": 0.9855,
+    "tn": 93,
+    "fp": 7,
+    "fn": 1,
+    "tp": 99,
+    "f1_score": 0.9611650485436893
+  },
+  "test": {
+    "accuracy": 0.98,
+    "balanced_accuracy": 0.98,
+    "auc_roc": 0.9963,
+    "tn": 97,
+    "fp": 3,
+    "fn": 1,
+    "tp": 99,
+    "f1_score": 0.9801980198019802
+  },
+  "test_jpeg_85": {
+    "accuracy": 0.98,
+    "balanced_accuracy": 0.98,
+    "auc_roc": 0.9969,
+    "tn": 97,
+    "fp": 3,
+    "fn": 1,
+    "tp": 99,
+    "f1_score": 0.9801980198019802
+  }
+}
