@@ -5,8 +5,6 @@ import { VerifyImage } from "@/features/images/application/verify-image";
 import { ImageTooLargeError, InvalidImageError, savePrivateImage } from "@/features/images/infrastructure/private-image-storage";
 import { apiError } from "@/shared/presentation/api-error";
 
-export const runtime = "nodejs";
-
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
 export async function POST(request: Request) {

@@ -32,8 +32,8 @@ export class HttpImageVerification implements ImageVerificationPort {
       const url = new URL(serviceUrl);
       if (url.protocol !== "http:" && url.protocol !== "https:") throw new Error("Invalid service protocol");
 
-      const storageDirectory = path.resolve(process.cwd(), process.env.IMAGE_STORAGE_DIR ?? "../var/private-images");
-      const imagePath = path.resolve(storageDirectory, input.storageKey);
+      const storageDirectory = path.resolve(/* turbopackIgnore: true */ process.cwd(), process.env.IMAGE_STORAGE_DIR ?? "../var/private-images");
+      const imagePath = path.resolve(/* turbopackIgnore: true */ storageDirectory, input.storageKey);
       if (path.dirname(imagePath) !== storageDirectory) throw new Error("Invalid storage key");
 
       const imageBytes = await readFile(imagePath);
