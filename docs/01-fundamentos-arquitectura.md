@@ -1,77 +1,61 @@
-# 01 — Fundamentos y arquitectura
+# 01 — Fundamentos del feed
 
 ## Objetivo
 
-Dejar una base ejecutable para la plataforma editorial de noticias: portada responsive, aplicación Next.js, PostgreSQL, persistencia Prisma, roles seguros y un límite explícito para la futura verificación de imágenes. Esta etapa no afirma que un modelo IA esté integrado ni publica contenido de muestra.
+Construir una página pública de noticias periodísticas, de una sola ruta y con scroll infinito. La experiencia toma el ritmo de un feed social como Facebook: publicaciones en una columna, imagen protagonista, lectura continua y sin navegación a otras páginas. No hay login, registro, perfiles, roles de lector ni controles que dependan de una cuenta.
 
-## Alcance
+## Decisiones de producto
 
-- Next.js App Router, React y TypeScript estricto en un mismo proyecto.
-- PostgreSQL como único servicio de Docker Compose; la aplicación corre localmente.
-- Prisma ORM con migraciones versionadas.
-- Roles `READER` y `JOURNALIST`, definidos en servidor; contraseñas con hash y sesión en cookie `HttpOnly`.
-- Carga de JPEG, PNG y WebP a almacenamiento privado fuera de `public/`, con tamaño limitado y hash SHA-256.
-- Puerto `ImageVerificationPort`; el adaptador inicial devuelve `NOT_CONFIGURED` y nunca aprueba una imagen.
-- Crear borradores sin proveedor IA; impedir publicar si no existe aprobación para el hash actual de la imagen.
-- Portada editorial celeste, mobile-first, accesible, con titulares en espacios reservados hasta recibir el contenido real.
+- El contenido corresponde a noticias escritas por periodistas; el feed se puede leer sin identificarse.
+- El feed incluye datos sintéticos de prueba de Santo Domingo, identificados como ficticios y no correspondientes a hechos reales. Conservar literalmente cualquier titular real que entregue el usuario.
+- No superponer ni duplicar títulos. Mantener literalmente los títulos que entregue el usuario.
+- Una sola página pública; acciones como secciones, búsqueda, newsletter, comentarios o páginas de detalle quedan fuera hasta que se soliciten.
+- Scroll infinito: cargar el siguiente bloque al acercarse al final, con estado de carga visible.
+- Botón `Crear noticia` abre un modal de tres pasos: titular y tema; resumen, contenido e imagen; vista previa y agregar al feed.
+- La creación de noticias es una demostración local en memoria, sin login ni persistencia.
+- Mantener diseño responsive, contraste suficiente, foco visible y respeto por `prefers-reduced-motion`.
 
-## Estructura
+## Base técnica
+
+- Next.js App Router, React y TypeScript estricto.
+- Organizar por features y capas solo cuando haya lógica real que separar.
+- Server Components por defecto; la portada compone el feed interactivo desde la feature `news`.
+- PostgreSQL y Prisma quedan disponibles para una etapa posterior que defina la fuente real del feed. Compose solo ejecuta PostgreSQL.
+- No exponer autenticación, registro, sesiones, cuentas de lectores ni rutas editoriales en esta etapa.
+- No conectar IA ni marcar noticias como verificadas. La verificación de imágenes se define solo cuando exista proveedor y flujo editorial acordados.
+- El servidor `npm run dev` debe permanecer activo mientras se revisa el diseño; los cambios del front deben reflejarse con hot reload.
+
+## Estructura prevista
 
 ```text
-client/
-  prisma/                 Esquema y migraciones PostgreSQL
-  src/app/                Rutas, layout y Route Handlers delgados
-  src/features/auth/      Registro, autenticación, roles y sesión
-  src/features/images/    Contrato, caso de uso y almacenamiento privado
-  src/shared/              Prisma y formato transversal de errores
-docker-compose.yml         Solo PostgreSQL
+client/src/app/                 Única página y estilos globales
+client/src/features/news/       Feed y componentes de publicaciones
+client/public/images/           Recursos visuales locales
+docker-compose.yml              PostgreSQL solo cuando se use persistencia
 ```
 
-Los Server Components son el valor por defecto. El código que depende de Prisma, archivos, cookies o claves se ejecuta solo en servidor. Los módulos se organizan por feature y las rutas HTTP validan entrada con Zod.
-
-## Contratos iniciales
-
-| Ruta | Contrato |
-| --- | --- |
-| `GET /api/health` | Estado de Next y conexión real a PostgreSQL. |
-| `POST /api/auth/register` | Crea siempre un `READER`; ignora roles enviados en el cuerpo. |
-| `POST /api/auth/register/journalist` | Registro de periodista sin aprobación humana; rol fijado por la ruta. |
-| `POST /api/auth/login` | Verifica hash de contraseña y emite cookie de sesión `HttpOnly`, `SameSite=Lax`. |
-| `GET /api/auth/session` / `POST /api/auth/logout` | Consulta o destruye la sesión. |
-| `POST /api/images` | Requiere periodista; valida formato/tamaño, guarda fuera de `public/`, calcula SHA-256 y conserva resultado `NOT_CONFIGURED`. |
-| `POST /api/articles` | Requiere periodista; crea un borrador de su propiedad. |
-| `POST /api/articles/{id}/publish` | Requiere periodista propietario y aprobación `APPROVED` cuyo SHA-256 coincida con la imagen actual. |
-
-Los errores usan `{ error: { code, message, correlationId } }`, mensajes en español y no exponen excepciones internas.
-
-## Datos y verificación de imágenes
-
-Prisma define `User`, `Article`, `ImageAsset` e `ImageVerification`. La aprobación se guarda junto al hash exacto del archivo y la ruta de publicación compara ambos valores. Reemplazar una imagen crea un nuevo registro/hash, por lo que las aprobaciones antiguas no sirven para publicarla. El adaptador sin proveedor produce `NOT_CONFIGURED`; no hay aprobación manual ni falso modo productivo.
-
-Verificar una imagen solo evalúa el archivo según el proveedor disponible; no certifica la veracidad de la noticia.
+Las imágenes SVG locales son ilustrativas. Los datos sintéticos y los borradores creados desde el modal se identifican en pantalla; no se presentan como publicaciones reales.
 
 ## Arranque local
 
-1. Copiar `.env.example` a `.env` y `client/.env.example` a `client/.env`; usar los mismos datos de PostgreSQL.
-2. Desde la raíz ejecutar `docker compose up -d db`.
-3. Desde `client`, ejecutar `npm ci`, `npm run db:generate`, `npm run db:migrate` y `npm run dev`.
-4. Revisar `http://localhost:3000` y `http://localhost:3000/api/health`.
-
-El servidor `next dev` mantiene hot reload. La portada usa ilustraciones locales y espacios vacíos para títulos, firmas y resúmenes que todavía no se han proporcionado; no muestra titulares inventados como noticias reales.
+1. Desde `client`, ejecutar `npm ci` una sola vez.
+2. Ejecutar `npm run dev`.
+3. Abrir `http://localhost:3000`; el servidor debe seguir activo para recibir cambios en caliente.
+4. PostgreSQL no es requisito para revisar esta página estática.
 
 ## Aceptación de etapa
 
-- [x] Next.js compila y sirve la portada; responsive, accesible y sin encabezados ficticios.
-- [x] Compose contiene solo PostgreSQL y usa volumen persistente.
-- [x] Prisma genera cliente y aplica migración inicial a PostgreSQL limpio.
-- [x] Health informa conexión real a la base.
-- [x] Roles se fijan en servidor; el payload no puede elevar `READER` a `JOURNALIST`.
-- [x] Sesiones no exponen tokens al JavaScript del navegador.
-- [x] Archivos se validan y guardan fuera de `public/`; el proveedor ausente no aprueba.
-- [x] La publicación requiere aprobación vigente del hash actual.
-- [ ] Ejecutar lint, comprobación de tipos y build de producción tras los últimos cambios.
-- [ ] Reiniciar PostgreSQL y confirmar que la migración y los datos sobreviven al reinicio.
+- [x] El sitio tiene una sola página pública y no ofrece login, registro ni navegación a otras páginas.
+- [x] El feed muestra publicaciones en una columna y carga más al desplazarse hasta el final.
+- [x] El scroll funciona en escritorio y móvil, y respeta movimiento reducido y accesibilidad por teclado.
+- [x] Las noticias sintéticas de Santo Domingo llevan marca visible de prueba y no se presentan como hechos.
+- [x] `Crear noticia` abre un modal de tres pasos y agrega la vista previa al inicio del feed.
+- [x] Los titulares que escribe el usuario se muestran sin cambios.
+- [x] Los cambios del código se reflejan en `http://localhost:3000` mediante hot reload.
+- [x] `npm run lint`, `npm run typecheck` y `npm run build` terminan correctamente.
 
-## Límites
+La comprobación manual en navegador confirmó el feed, la carga al desplazarse, la vista previa, el titular literal, la marca de borrador local y el ciclo de foco del modal. Lint, tipos y build se ejecutaron después de los cambios finales.
 
-La integración del modelo/proveedor IA y los titulares/artículos reales dependen de los insumos editoriales que entregue el equipo. Hasta entonces, los envíos quedan como borrador y la publicación permanece bloqueada.
+## Fuera de alcance
+
+Login, cuentas, perfiles, panel editorial, publicación de noticias, comentarios reales, persistencia del feed, proveedor IA y verificación de imágenes. Acordar su alcance antes de abrir la siguiente etapa.

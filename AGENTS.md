@@ -1,6 +1,6 @@
 AGENTS.md — Reglas generales para agentes de desarrollo
 Contexto del producto
-Web de noticias editorial, Next.js App Router + React + TypeScript, frontend y backend en un único repositorio, PostgreSQL mediante Docker (solo BD), Prisma, autenticación por rol READER/`JOURNALIST`, imágenes locales, verificación IA mediante puertos/adaptadores. Diseño celeste pastel inspirado en la fluidez de iOS, pero web-first. Consultar las etapas 01-fundamentos-arquitectura.md a 04-integracion-ia-y-entrega.md antes de trabajar.
+Web pública de noticias periodísticas: una sola página de feed continuo estilo Facebook, con scroll infinito; sin login, registro, roles de lector ni pantallas adicionales. Next.js App Router + React + TypeScript; PostgreSQL mediante Docker solo cuando una etapa lo requiera. El contenido es de periodistas, pero el lector accede sin cuenta. Diseño celeste pastel, web-first y responsive. La etapa vigente es `docs/01-fundamentos-arquitectura.md`; los documentos de etapas anteriores con nombres/códigos distintos son referencias obsoletas, no autoridad de alcance.
 Orden de trabajo
 1. Leer los documentos de requerimientos y comprobar el estado real del repositorio.
 2. Trabajar en el alcance de la etapa actual; terminar funcionalidad y validaciones antes de comenzar la siguiente.
@@ -20,14 +20,14 @@ Diseño UX/UI (prioridad del producto)
 - Estética editorial moderna de sitio web, no prototipo de aplicación móvil.
 - Celeste pastel como acento, fondo claro, texto legible, fotos protagonistas, espaciado amplio.
 - No duplicar títulos ni apilar encabezados redundantes.
-- No inventar titulares promocionales ni superponer texto sobre los titulares del usuario; conservar sus títulos tal cual y, si todavía no están disponibles, dejar ese espacio sin titular.
+- Conservar literalmente los titulares que entregue el usuario, sin duplicarlos ni superponerles texto. Los datos sintéticos de prueba se identifican en pantalla como ficticios y no describen hechos reales.
 - No abusar de bordes, sombras, tarjetas, iconos ni badges. Priorizar espacios, tipografía y contraste suave.
 - CSS Modules por componente, tokens CSS globales, Lucide React, animaciones Motion/CSS suaves y prefers-reduced-motion.
 - Diseño accesible y responsive con foco visible, teclado y estados loading/empty/error/success.
 - No introducir bibliotecas visuales pesadas sin justificación.
 Seguridad, datos y publicación
-- Autorizar siempre del lado servidor: actor autenticado, rol y propiedad de recurso.
-- Registrar periodistas sin aprobación humana, pero no permitir escalada de rol mediante payloads modificados.
+- No crear login, registro, roles de lector ni autenticación para consultar el feed.
+- La lectura del feed es pública; cualquier futura herramienta de carga/editorial debe definirse aparte antes de implementarse.
 - Nunca guardar contraseña sin hash ni exponer credenciales, .env, rutas internas, logs sensibles o trazas.
 - Subidas: validar formato real/tamaño, generar nombre seguro, almacenar fuera de public, calcular SHA-256 y proteger rutas.
 - La publicación exige estado aprobado de la imagen vigente, con hash coincidente; editar/reemplazar la imagen invalida la aprobación.
