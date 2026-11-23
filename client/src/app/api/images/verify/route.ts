@@ -53,14 +53,13 @@ export async function POST(request: Request) {
   }
 
   const sha256 = createHash("sha256").update(bytes).digest("hex");
-  try {
-    const verification = await new VerifyImage(new HttpImageVerification()).execute({
-      storageKey: storedImage.storageKey,
-      sha256,
-      mimeType: detected.mimeType,
-    });
-    return Response.json(verification, { headers: { "cache-control": "no-store" } });
-  } finally {
-    await storedImage.remove().catch(() => undefined);
-  }
+  const verification = await new VerifyImage(new HttpImageVerification()).execute({
+    storageKey: storedImage.storageKey,
+    sha256,
+    mimeType: detected.mimeType,
+  });
+  return Response.json({
+    ...verification,
+    imageUrl: `/uploaded-images/${storedImage.storageKey}`,
+  }, { headers: { "cache-control": "no-store" } });
 }

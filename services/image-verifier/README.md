@@ -1,19 +1,16 @@
 # Servicio local de verificación de imágenes
 
-Servicio privado de inferencia para el modelo CNN de frecuencias. Escucha únicamente en `127.0.0.1:8090`; no publica el archivo del modelo ni guarda las imágenes recibidas.
+Servicio privado de inferencia para el modelo CNN de frecuencias. En Docker escucha dentro del contenedor y publica el puerto solo en `127.0.0.1:8090`; no publica el archivo del modelo ni guarda las imágenes recibidas.
 
 ## Iniciar
 
-Desde esta carpeta, en PowerShell:
+Desde la raíz del repositorio:
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python server.py
+```sh
+docker compose up -d image-verifier
 ```
 
-En otra terminal, inicia Next.js con `IMAGE_VERIFICATION_URL=http://127.0.0.1:8090/verify`. El endpoint `GET /health` permite comprobar que el modelo se cargó.
+El endpoint `GET http://127.0.0.1:8090/health` permite comprobar que el modelo se cargó. En otra terminal, inicia Next.js con `IMAGE_VERIFICATION_URL=http://127.0.0.1:8090/verify`.
 
 ## Contrato HTTP
 

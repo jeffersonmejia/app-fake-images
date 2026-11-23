@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from io import BytesIO
 import json
 import math
+import os
 from pathlib import Path
 import time
 
@@ -128,7 +129,10 @@ class VerificationHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    server = ThreadingHTTPServer(("127.0.0.1", 8090), VerificationHandler)
+    host = os.environ.get("IMAGE_VERIFIER_HOST", "127.0.0.1")
+    if host not in {"127.0.0.1", "0.0.0.0"}:
+        raise ValueError("IMAGE_VERIFIER_HOST debe ser 127.0.0.1 o 0.0.0.0.")
+    server = ThreadingHTTPServer((host, 8090), VerificationHandler)
     print("Verificador de imágenes disponible en http://127.0.0.1:8090", flush=True)
     try:
         server.serve_forever()
